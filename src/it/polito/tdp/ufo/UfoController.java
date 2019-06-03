@@ -6,12 +6,26 @@ package it.polito.tdp.ufo;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+
+import it.polito.tdp.ufo.model.Model;
+import it.polito.tdp.ufo.model.Year;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 
 public class UfoController {
+	
+	Model model = new Model();
+	
+	public void setModel(Model model){
+		this.model=model;
+		boxAnno.getItems().addAll(model.getAllYear());
+		
+	}
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -20,10 +34,10 @@ public class UfoController {
     private URL location;
 
     @FXML // fx:id="boxAnno"
-    private ComboBox<?> boxAnno; // Value injected by FXMLLoader
+    private ComboBox<Year> boxAnno; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxStato"
-    private ComboBox<?> boxStato; // Value injected by FXMLLoader
+    private ComboBox<String> boxStato; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtResult"
     private TextArea txtResult; // Value injected by FXMLLoader
@@ -36,6 +50,14 @@ public class UfoController {
     @FXML
     void handleAvvistamenti(ActionEvent event) {
 
+    	int year = boxAnno.getValue().getYear();
+    	
+    	model.creaGrafo(year);
+    	
+    	boxStato.getItems().clear();
+    	
+    	boxStato.getItems().addAll(model.getGrafo().vertexSet());
+    	
     }
 
     @FXML
