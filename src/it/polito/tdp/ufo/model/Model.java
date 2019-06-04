@@ -1,9 +1,7 @@
 package it.polito.tdp.ufo.model;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.DefaultEdge;
@@ -80,4 +78,54 @@ public class Model {
 			//Pulisco il primo valore della lista che è lo stato stesso
 			return raggiungibili.subList(1, raggiungibili.size());
 		}
+	
+	//RICORSIONE
+	private List<String> best;
+		
+	public List<String> ricorsione(String partenza){
+		
+		this.best = new ArrayList<>();
+		
+		//Creo soluzione parziale vuota
+		List<String> partial = new ArrayList<>();
+		
+		//Il risultato deve partire dal nodo selezionato
+		partial.add(partenza);
+					
+		//Start recursion (level 0)
+        sub_ricorsione(partial, 0);
+				
+		//ritorno la miglior sequenza trovata 
+		return best;
+	}
+	
+	public void sub_ricorsione(List<String> partial, int livello) {
+		
+		//CONDIZIONE TERMINAZIONE (Cammino più lungo)
+		if ( partial.size()>best.size() ) {
+			
+			this.best = new ArrayList<>(partial);
+			
+		}
+		
+		//CASO INTERMEDIO
+		
+		List<String> candidati = Graphs.successorListOf(grafo, partial.get(partial.size()-1));
+		
+		for (String s : candidati) {
+			
+			//Solo una volta può comparire
+			if (!partial.contains(s)) {
+			
+				partial.add(s);
+			
+				sub_ricorsione(partial, livello+1);
+			
+				partial.remove(partial.size()-1);
+			}
+		}
+		
+		
+		
+	}
 }

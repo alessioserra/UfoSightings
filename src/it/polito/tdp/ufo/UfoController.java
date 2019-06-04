@@ -76,6 +76,12 @@ public class UfoController {
     void handleSequenza(ActionEvent event) {
     	
 
+    	txtResult.clear();
+    	
+       	String partenza = boxStato.getValue();
+    	
+    	txtResult.appendText("PERCORSO MASSIMO: "+ model.ricorsione(partenza));
+    	
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
