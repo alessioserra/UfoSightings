@@ -5,6 +5,7 @@
 package it.polito.tdp.ufo;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.jgrapht.Graph;
@@ -44,7 +45,18 @@ public class UfoController {
 
     @FXML
     void handleAnalizza(ActionEvent event) {
-
+    	
+    	txtResult.clear();
+    	
+    	String partenza = boxStato.getValue();
+    	
+    	txtResult.appendText("Predecessore : "+model.getPredecessori(partenza)+"\n");
+    	txtResult.appendText("Successore : "+model.getSuccessori(partenza)+"\n");
+    	
+    	
+    	txtResult.appendText("RAGGIUNGILI: " );
+    	List<String> raggiungibili = model.getRaggiungibili(partenza); 	
+    	for (String string : raggiungibili) txtResult.appendText(string+" - ");
     }
 
     @FXML
@@ -62,6 +74,7 @@ public class UfoController {
 
     @FXML
     void handleSequenza(ActionEvent event) {
+    	
 
     }
 

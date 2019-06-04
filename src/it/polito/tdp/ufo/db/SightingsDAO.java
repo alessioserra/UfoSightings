@@ -140,15 +140,19 @@ public class SightingsDAO {
 			
 			ResultSet res = st.executeQuery() ;
 			
+			//flag
+			int i = 1;
+			
 			if(res.next()) {
-					if ( res.getInt("cnt") > 0 ) return true;
 					
-					else return false;
+				if ( res.getInt("cnt") > 0 ) 
+					i = 0;
 			}
 			
-			conn.close();
+			conn.close();	
 			
-			return false ;
+			if (i==0) return true;
+			else return false ;
 
 		} catch (SQLException e) {
 			return false ;

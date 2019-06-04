@@ -1,5 +1,6 @@
 package it.polito.tdp.ufo.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.jgrapht.Graphs;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
+import org.jgrapht.traverse.GraphIterator;
 
 import it.polito.tdp.ufo.db.SightingsDAO;
 
@@ -63,16 +65,19 @@ public class Model {
 	}
 	
 	//Visita
-	
-	public List<String> getRaggiungibili(){
-		
-		List<String> raggiungibili = new LinkedList<>();
-		
-		DepthFirstIterator<String, DefaultEdge> dp = new DepthFirstIterator<>(this.grafo);
-		
-		dp.
-		
-		return raggiungibili;
-	}
-
+	public List<String> getRaggiungibili(String partenza){
+			
+			List<String> raggiungibili = new ArrayList<>();
+			
+			//CREO ITERATORE E LO ASSOCIO AL GRAFO      
+			//GraphIterator<Fermata, DefaultEdge> it = new BreadthFirstIterator<>(this.grafo,source); //in ampiezza
+			GraphIterator<String, DefaultEdge> it = new DepthFirstIterator<>(this.grafo,partenza); //in profondita'
+			
+			while(it.hasNext()) {
+				raggiungibili.add(it.next());
+			}
+			
+			//Pulisco il primo valore della lista che è lo stato stesso
+			return raggiungibili.subList(1, raggiungibili.size());
+		}
 }
